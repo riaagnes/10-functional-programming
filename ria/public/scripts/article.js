@@ -22,7 +22,7 @@ var app = app || {};
     articleData.sort((a,b) => (new Date(b.publishedOn)) - (new Date(a.publishedOn)))
     Article.all = articleData.map(articleObject => new Article(articleObject));
     //  OLD forEach():
-   // articleData.forEach(articleObject => Article.all.push(new Article(articleObject)));
+    // articleData.forEach(articleObject => Article.all.push(new Article(articleObject)));
 
 
   };
@@ -37,20 +37,28 @@ var app = app || {};
 
   // Hint: What property of an individual instance contains the main text of the article?
   Article.numWordsAll = () => {
+    Article.all.map(article=>article.body.match(/\b\w+/g).length).reduce((a,b)=>a + b)
 
-  
   };
 
   // Hint: Make sure to return an array and avoid duplicates.
   Article.allAuthors = () => {
-    
+    return Article.all.map(article =>article.author).reduce((names,name)=>{
+      if(names.indexOf(name)=== -1) names.push(name);
+      return names;
+    },[]);
   };
 
 
   Article.numWordsByAuthor = () => {
-    
-  }
-     
+    return Article.allAuthors().map(author =>{
+      return{
+        name:author,
+        numWords:Article.all.filter(function(objectElement){ return objectElement.author=== author;})
+          .map(a => a.body.match(/\b\w+/g).length).reduce((a,b)=>a+b)
+      }
+    })
+  };
   // Hint: you will need to chain some combination of .filter(), .map(), and .reduce() to get the value of the numWords property
   Article.truncateTable = callback => {
     $.ajax({
