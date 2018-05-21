@@ -38,24 +38,17 @@ var app = app || {};
   // Hint: What property of an individual instance contains the main text of the article?
   Article.numWordsAll = () => {
 
-    return Article.all.map(x => x.body.split(' ').length).reduce( (prevValue, value) => prevValue + value);
+  
   };
 
   // Hint: Make sure to return an array and avoid duplicates.
   Article.allAuthors = () => {
-    return Article.all.map(x => x.author).filter((value, index, array) => array.indexOf(value) === index);
+    
   };
 
 
   Article.numWordsByAuthor = () => {
-    Article.allAuthors().map(author => {
-     return Article.allAuthors.map(author =>{
-       return{
-         author:author,
-         numWords:Article.all.filter(x =>x.author === author).map(x=>x.body.split(' ').length).reduce((prevValue,value)=>prevValue+value)
-       }
-       }
-    })
+    
   }
      
   // Hint: you will need to chain some combination of .filter(), .map(), and .reduce() to get the value of the numWords property
